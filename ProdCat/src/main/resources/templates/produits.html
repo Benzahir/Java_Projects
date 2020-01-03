@@ -1,0 +1,133 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org"
+	xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+	layout:decorate="layout">
+<head>
+<meta charset="ISO-8859-1">
+<title>Products</title>
+</head>
+
+<body>
+
+	<div layout:fragment="content">
+		<!-- Modal -->
+		<div class="modal fade" id="exampleModal" tabindex="-1" role="dialog"
+			aria-labelledby="exampleModalLabel" aria-hidden="true">
+			<div class="modal-dialog" role="document">
+				<div class="modal-content">
+					<form th:action="@{/SaveProduct}" method="post">
+						<div class="modal-header">
+							<h5 class="modal-title" id="exampleModalLabel">Add new
+								product</h5>
+							<button type="button" class="close" data-dismiss="modal"
+								aria-label="Close">
+								<span aria-hidden="true">&times;</span>
+							</button>
+						</div>
+
+						<div class="modal-body">
+							<div class="form-group">
+								<label >Product name: </label> <input type="text"
+									class="form-control"  name="name" th:value="${product.name}">
+									<span th:errors="${product.name}"></span>
+							</div>
+							<div class="form-group">
+								<label >Product price: </label> <input
+									type="text" class="form-control"  name="price" th:value="${product.price}">
+									<span th:errors="${product.price}"></span>
+							</div>
+							<div class="form-group">
+								<label >Category</label> 
+								<select  class="form-control" name="category" th:value="${product.category}" >
+									<option th:each="c:${categories}" th:value="${c.ref}" th:text="${c.ref}"></option>									
+								</select>								
+							</div>							
+						</div>
+
+						<div class="modal-footer">
+							<button type="button" class="btn btn-secondary"
+								data-dismiss="modal">Close</button>
+							<button type="submit" class="btn btn-primary">Submit</button>
+						</div>
+					</form>
+				</div>
+			</div>
+		</div>
+		
+		<!-- Edit Modal -->
+		
+		<div class="modal fade" id="exampleModal2" tabindex="-1" role="dialog"
+			aria-labelledby="exampleModalLabel" aria-hidden="true">
+			<div class="modal-dialog" role="document">
+				<div class="modal-content">
+					<form th:action="@{/SaveProduct}" method="post">
+						<div class="modal-header">
+							<h5 class="modal-title" id="exampleModalLabel">Edit
+								product</h5>
+							<button type="button" class="close" data-dismiss="modal"
+								aria-label="Close">
+								<span aria-hidden="true">&times;</span>
+							</button>
+						</div>
+
+						<div class="modal-body">
+							<div class="form-group">
+								<label >Product name: </label> <input type="text"
+									class="form-control"  name="name" th:value="${product.name}">									
+							</div>
+							<div class="form-group">
+								<label >Product price: </label> <input
+									type="text" class="form-control"  name="price" th:value="${product.price}">									
+							</div>
+							<div class="form-group">
+								<label >Category</label> 
+								<select  class="form-control" name="category" th:value="${product.category}" >
+									<option th:each="c:${categories}" th:value="${c.ref}" th:text="${c.ref}"></option>									
+								</select>								
+							</div>							
+						</div>
+
+						<div class="modal-footer">
+							<button type="button" class="btn btn-secondary"
+								data-dismiss="modal">Close</button>
+							<button type="submit" class="btn btn-primary">Submit</button>
+						</div>
+					</form>
+				</div>
+			</div>
+		</div>
+		
+		<div class="container">
+			<div class="card  mt-3 mb-3">
+				<div class="card-header">
+					Product list
+					<button type="button" class="btn btn-success btn-sm ml-3"
+						data-toggle="modal" data-target="#exampleModal">Add
+						Product</button>
+				</div>
+				<div class="card-body">
+					<table class="table">
+						<tr>
+							<th>ID</th>
+							<th>Name</th>
+							<th>Price</th>
+							<th>Category</th>
+							<th></th>
+						</tr>
+						<tr th:each="p:${products}">
+							<td th:text="${p.id}"></td>
+							<td th:text="${p.name}"></td>
+							<td th:text="${p.price}"></td>
+							<td th:text="${p.category.name}"></td>
+							<td><a onclick="return confirm('sure ?')" th:href="@{/deleteProduct(id=${p.id})}" class="btn btn-danger btn-sm mr-1">Delete</a><a th:href="@{/edit(id=${p.id})}" data-toggle="modal" data-target="#exampleModal2" class="btn btn-info btn-sm">Edit</a></td>
+						</tr>
+					</table>
+				</div>
+			</div>
+
+		</div>
+	</div>
+
+
+</body>
+</html>

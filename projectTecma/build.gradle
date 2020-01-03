@@ -1,0 +1,56 @@
+buildscript {
+	ext {
+		springBootVersion = '1.4.3.RELEASE'
+	}
+	repositories {
+        mavenCentral()
+        maven { url "https://repo.spring.io/snapshot" }
+        maven { url "https://repo.spring.io/milestone" }
+	}
+	dependencies {
+		classpath("org.springframework.boot:spring-boot-gradle-plugin:${springBootVersion}")
+	}
+}
+
+apply plugin: 'java'
+apply plugin: 'eclipse'
+apply plugin: 'org.springframework.boot'
+
+jar {
+	baseName = 'demo'
+	version = '0.0.1-SNAPSHOT'
+}
+sourceCompatibility = 1.8
+targetCompatibility = 1.8
+
+repositories {
+	mavenCentral()
+    maven { url "https://repo.spring.io/snapshot" }
+    maven { url "https://repo.spring.io/milestone" }
+}
+
+configurations {
+	providedRuntime
+}
+
+
+dependencies {
+    compile("org.springframework.boot:spring-boot-starter-web")
+    providedRuntime("org.springframework.boot:spring-boot-starter-tomcat")
+    compile("org.springframework.boot:spring-boot-starter-security")
+    compile("org.springframework.boot:spring-boot-starter-data-jpa")
+    compile("org.springframework:spring-jdbc")
+    compile("org.hibernate:hibernate-validator")
+    compile("org.springframework.security:spring-security-taglibs")
+    compile("org.springframework.boot:spring-boot-starter-mail:1.2.1.RELEASE")
+    compile("org.apache.commons:commons-lang3:3.3.2")
+	// image for java dependency
+	compile("org.im4java:im4java:1.2.0")
+    // jsp dependencies
+    compile("javax.servlet:jstl:1.2")
+    runtime("org.apache.tomcat.embed:tomcat-embed-jasper")
+    // JDBC drivers
+    runtime("mysql:mysql-connector-java:5.1.29")
+    testCompile("org.springframework.boot:spring-boot-starter-test")
+	
+}
